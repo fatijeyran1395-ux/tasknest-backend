@@ -79,3 +79,25 @@ bash
 curl -X GET "http://localhost:8000/api/v1/tasks?status=pending&priority=high&search=طراحی" \
   -H "Accept: application/json" \
   -H "Authorization: Bearer YOUR_TOKEN_HERE"
+استقرار روی سرور
+bash
+# ۱. کلون روی سرور
+git clone https://github.com/fatijeyran1395-ux/tasknest-backend.git
+
+# ۲. نصب پکیج‌ها (بدون dev)
+composer install --no-dev --optimize-autoloader
+
+# ۳. تنظیم .env
+cp .env.example .env
+php artisan key:generate
+
+# ۴. مایگریشن
+php artisan migrate --force
+
+# ۵. کش
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+
+# ۶. دسترسی‌ها
+chmod -R 775 storage bootstrap/cache
